@@ -74,10 +74,10 @@ var people = [
 	{ id: 1035, name: 'Kris Billings', city_id: 111 } ,
 	{ id: 1036, name: 'Travis Huber', city_id: 111 } ,
 	{ id: 1037, name: 'Juan Ramirez', city_id: 111 } ,
-	{ id: 1038, name: 'Jenny Reed', city_id: 11 } ,
-	{ id: 1039, name: 'Bevel James', city_id: 100 } ,
-	{ id: 1040, name: 'Colonol Nesbitt', city_id: 100 } ,
-	{ id: 1041, name: 'Opa\'s Sausage', city_id: 100 } ,
+	{ id: 1038, name: 'Jenny Reed', city_id: 113 } ,
+	{ id: 1039, name: 'Bevel James', city_id: 113 } ,
+	{ id: 1040, name: 'Colonol Nesbitt', city_id: 113 } ,
+	{ id: 1041, name: 'Opa\'s Sausage', city_id: 113 } ,
 ]
 
 var reduce = function(id_arr, el_arr, match_property) {
@@ -110,6 +110,11 @@ var reduce = function(id_arr, el_arr, match_property) {
 			} else if ( name_a < name_b ) {
 				return -1;
 			} else {
+				if ( a.id > b.id ) {
+					return 1;
+				} else if ( a.id < b.id ) {
+					return -1;
+				}
 				return 0;
 			}
 			

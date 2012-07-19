@@ -89,7 +89,7 @@
 					if ( typeof sourceEl !== 'undefined' ) {
 						ids = sourceEl.val();
 						
-						console.log(sourceEl.prop('name'));
+						console.info(sourceEl.prop('name'));
 						
 						if ( ids == null ) {
 							ids = [];
@@ -111,17 +111,31 @@
 						cache: false,
 						dataType: 'json',
 						error: function(jqXHR, textStatus, errorThrown) {
-							console.log('error: ' + errorThrown);
+							console.info('error: ' + errorThrown);
 						},
 						beforeSend: function() {
-							targetEl.empty().trigger('change');
+							targetEl.empty();
 						},
 						success: function(data) {
 							targetEl
-								.append('<option value="" selected>- ALL -</option>');
+								.append('<option value="">- ALL -</option>');
 							for ( var i in data ) {
 								targetEl.append('<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>')
 							}
+							
+							var defaults = targetEl.attr('data-defaults');
+							if ( defaults && defaults.length > 0 ) {
+								defaults = defaults.split(',');
+								for ( var i = 0; i < defaults.length; i++ ) {
+									targetEl.find('option[value="' + defaults[i] + '"]').prop('selected', 'selected');
+								}
+							} else {
+								targetEl.find('option').first().prop('selected', 'selected');
+							}
+							
+							targetEl.removeAttr('data-defaults');
+							
+							targetEl.trigger('change');
 						}
 						
 					});
@@ -138,10 +152,10 @@
 	
 	<body>
 		<div id="group1">
-			<select name="states" multiple></select>
-			<select name="counties" multiple></select>
+			<select name="states" multiple data-defaults="1,2,4"></select>
+			<select name="counties" multiple data-defaults="10,12,14"></select>
 			<select name="cities" multiple></select>
-			<select name="people" multiple></select>
+			<select name="people" multiple data-defaults="1003,1009,1010,1030,1037"></select>
 		</div>
 		
 		<div id="group2">
